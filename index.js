@@ -9,14 +9,6 @@ const app = express();
 //DELETE - To Delete
 //PUT - To Update
 
-// CRUD
-
-app.get("/", (req, res) => {
-  res.json({
-    message: "Index",
-  });
-});
-
 app.get("/example", (req, res) => {
   res.json({
     message: "Get Method",
