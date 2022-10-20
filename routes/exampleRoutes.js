@@ -1,14 +1,19 @@
 const express = require("express");
+const User = require("../models/User");
 
 const exampleRoutes = express.Router();
 
-exampleRoutes.use((req, res) => {
-  res.json({ message: "ok" });
-});
-exampleRoutes.get("/", (req, res) => {
+exampleRoutes.get("/", async (req, res) => {
+  const user = new User({
+    firstName: "Ashok",
+    lastName: "Kumar",
+    email: "ashokkumar@gmail.com",
+    password: "@sh0k",
+  });
+  await user.save();
+
   res.json({
-    title: "Get Method",
-    subtitle: "asfa",
+    title: "Get Method 1",
   });
 });
 
