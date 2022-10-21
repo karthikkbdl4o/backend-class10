@@ -1,13 +1,26 @@
 const { Schema, mongoose } = require("mongoose");
 
 const schema = new Schema({
-  firstName: String,
-  lastName: String,
-  email: String,
-  password: String,
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
   userType: {
     type: String,
     isIn: ["USER", "SELLER"],
+    default: "USER",
   },
 });
 

@@ -3,17 +3,27 @@ const User = require("../models/User");
 
 const exampleRoutes = express.Router();
 
-exampleRoutes.get("/", async (req, res) => {
-  const user = new User({
-    firstName: "Ashok",
-    lastName: "Kumar",
-    email: "ashokkumar@gmail.com",
-    password: "@sh0k",
-  });
-  await user.save();
+//Query
+exampleRoutes.get("/query", (req, res) => {
+  console.log(req.query);
+  res.json({ message: "Query Param" });
+});
 
+//Path
+exampleRoutes.get("/path/(:name)", (req, res) => {
+  console.log(req.params.name);
+  res.json({ message: "Path Param", params: req.params });
+});
+
+//Body
+exampleRoutes.post("/body", (req, res) => {
+  console.log(req.body);
+  res.json({ message: "Body Param" });
+});
+
+exampleRoutes.get("/", async (req, res) => {
   res.json({
-    title: "Get Method 1",
+    title: "Get Method",
   });
 });
 
