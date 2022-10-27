@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const exampleRoutes = require("./routes/exampleRoutes");
 const { mongoose } = require("mongoose");
+const morgan = require("morgan");
 
 //Create Express Create
 const app = express();
@@ -27,6 +28,7 @@ connection.once("open", () => {
 //PUT - To Update
 
 app.use(cors());
+app.use(morgan("combined"));
 app.use(express.json());
 
 // app.use((req, res, next) => {
