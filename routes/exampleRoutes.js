@@ -56,7 +56,7 @@ exampleRoutes.post(
 exampleRoutes.post(
   "/body/extValidator",
 
-  body("email").isEmail().withMessage("Invalid Email"),
+  body("email").isEmail().withMessage("Invalid Email Address"),
   body("password").isStrongPassword().withMessage("Invalid Password"),
 
   (req, res) => {
