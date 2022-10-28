@@ -1,8 +1,14 @@
-const string = "This is a sample";
+const bcrypt = require("bcrypt");
 
-const encodedString = btoa(string);
+const password = "Ashok+1+Kumar";
 
-console.log(encodedString);
+const checkPassord = "Ashok+1+Kumar1";
 
-const decodedString = atob(encodedString);
-console.log(decodedString);
+const test = async () => {
+  const hash = await bcrypt.hash(password, 10).then((result) => result);
+  console.log(hash);
+
+  bcrypt.compare(checkPassord, hash).then((result) => console.log(result));
+};
+
+test();

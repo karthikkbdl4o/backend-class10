@@ -4,6 +4,7 @@ const cors = require("cors");
 const exampleRoutes = require("./routes/exampleRoutes");
 const { mongoose } = require("mongoose");
 const morgan = require("morgan");
+const indexRoutes = require("./routes/indexRoutes");
 
 //Create Express Create
 const app = express();
@@ -37,6 +38,7 @@ app.use(express.json());
 //   // next();
 // });
 
+app.use("/", indexRoutes);
 app.use("/example", exampleRoutes);
 
 // Listen To Port
