@@ -12,7 +12,14 @@ indexRoutes.post(
     .exists()
     .withMessage("Email Needed")
     .isEmail()
-    .withMessage("Email Invalid"),
+    .withMessage("Email Invalid")
+    .custom((email) => {
+      return User.findOne({ email }).then((user) => {
+        if (user) {
+          return Promise.reject("Email Already in use");
+        }
+      });
+    }),
   body("password")
     .exists()
     .withMessage("Password Needed")
@@ -40,5 +47,37 @@ indexRoutes.post(
     res.json({ message: "Signup Successful" });
   }
 );
+
+indexRoutes.post("/login", async (req, res) => {
+  console.log(req.headers.authorization);
+
+  const authorization = req.headers.authorization;
+
+  const encoded = authorization.split(" ")[1];
+
+  const decoded = atob(encoded);
+  const split = decoded.split(":");
+  const email = split[0];
+  const password = split[1];
+
+  //Get User
+  const user = await User.findOne({ email: email });
+
+  if (user == null) {
+    return res.status(401).json({ error: "User Not Signed Up" });
+  }
+
+  const isValid = await bcrypt
+    .compare(password, user.password)
+    .then((result) => result);
+
+  console.log(isValid);
+
+  if (isValid) {
+    res.json({ message: "Successful" });
+  } else {
+    res.status(401).json({ error: "Invalid Password" });
+  }
+});
 
 module.exports = indexRoutes;
