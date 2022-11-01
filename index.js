@@ -11,7 +11,7 @@ const app = express();
 
 //Connect to mongo
 mongoose.connect(
-  "mongodb+srv://backend:backend@backend.8srdpzt.mongodb.net/?retryWrites=true&w=majority"
+  "mongodb+srv://backend:backend@backend.ullktfa.mongodb.net/?retryWrites=true&w=majority"
 );
 
 const connection = mongoose.connection;

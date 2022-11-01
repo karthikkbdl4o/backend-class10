@@ -94,4 +94,22 @@ exampleRoutes.delete("/", (req, res) => {
   });
 });
 
+const asfaf = [
+  (req, res, next) => {
+    console.log("1");
+    next();
+  },
+  (req, res, next) => {
+    console.log("2");
+    next();
+  },
+  (req, res, next) => {
+    console.log("3");
+    next();
+  },
+];
+exampleRoutes.get("/middle", asfaf, (req, res) => {
+  res.json({ message: "Call back" });
+});
+
 module.exports = exampleRoutes;
