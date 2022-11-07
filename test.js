@@ -2,13 +2,21 @@ const bcrypt = require("bcrypt");
 
 const password = "Ashok+1+Kumar";
 
-const checkPassord = "Ashok+1+Kumar1";
+// const checkPassord = "Ashok+1+Kumar1";
 
-const test = async () => {
-  const hash = await bcrypt.hash(password, 10).then((result) => result);
-  console.log(hash);
+// const test = async () => {
+//   const hash = await bcrypt.hash(password, 10).then((result) => result);
+//   console.log(hash);
 
-  bcrypt.compare(checkPassord, hash).then((result) => console.log(result));
-};
+//   bcrypt.compare(checkPassord, hash).then((result) => console.log(result));
+// };
 
-test();
+// test();
+
+const obj = { a: "asfa", b: "Helo" };
+
+console.log(obj);
+
+delete obj.a;
+
+console.log(obj);

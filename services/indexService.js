@@ -2,40 +2,39 @@ const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 
-exports.signup = async (req, res) => {
+exports.signupService = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ message: errors });
+    return res.status(400).json({ errors: errors.array() });
   }
-
-  const passwordHash = await bcrypt
-    .hash(req.body.password, 10)
-    .then((result) => result);
+  const hash = await bcrypt.hash(req.body.password, 10).then((result) => {
+    return result;
+  });
 
   const user = new User({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
-    password: passwordHash,
+    password: hash,
   });
 
   await user.save();
-
-  res.json({ message: "Signup Successful" });
+  return res.json({ message: "Signed Up" });
 };
 
-exports.login = async (req, res) => {
-  const encoded = req.headers.authorization.split(" ")[1];
+exports.loginService = async (req, res) => {
+  const authorization = req.headers.authorization;
+  const encoded = authorization.replace("Basic ", "");
+  const decodedArray = atob(encoded).split(":");
+  const email = decodedArray[0];
+  const password = decodedArray[1];
 
-  const decode = atob(encoded);
+  console.log(email);
+  console.log(password);
 
-  const splitDecode = decode.split(":");
-  const email = splitDecode[0];
-  const password = splitDecode[1];
-
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email: email });
   if (user == null) {
-    return res.status(401).json({ error: "User Not Signed Up" });
+    return res.status(401).json({ message: "User UnAuth" });
   }
 
   const isValid = await bcrypt
@@ -45,8 +44,8 @@ exports.login = async (req, res) => {
     });
 
   if (isValid) {
-    res.json({ message: "Successful" });
+    res.json({ messsage: "Login Successfull" });
   } else {
-    res.status(401).json({ error: "Invalid Password" });
+    return res.status(401).json({ message: "User UnAuth" });
   }
 };

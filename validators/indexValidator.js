@@ -2,26 +2,23 @@ const { body } = require("express-validator");
 const User = require("../models/User");
 
 exports.signupValidator = [
-  body("firstName").exists().withMessage("First Name Needed"),
-
-  body("lastName").exists().withMessage("Last Name Needed"),
-
+  body("firstName").exists().withMessage("First Name Not Found"),
+  body("lastName").exists().withMessage("Last Name Not Found"),
   body("email")
     .exists()
-    .withMessage("Email Needed")
+    .withMessage("Email Not Found")
     .isEmail()
     .withMessage("Email Invalid")
     .custom((email) => {
-      return User.findOne({ email }).then((user) => {
-        if (user) {
-          return Promise.reject("Email Already in use");
+      return User.findOne({ email: email }).then((user) => {
+        if (user != null) {
+          return Promise.reject("User Already Exists");
         }
       });
     }),
-
   body("password")
     .exists()
-    .withMessage("Password Needed")
+    .withMessage("Password Not Found")
     .isStrongPassword()
     .withMessage("Password Invalid"),
 ];
