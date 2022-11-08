@@ -1,14 +1,12 @@
 const express = require("express");
-const User = require("../models/User");
-const bcrypt = require("bcrypt");
-const { body, validationResult } = require("express-validator");
 const { signupValidator } = require("../validators/indexValidator");
 const { signupService, loginService } = require("../services/indexService");
+const userAuthenticator = require("../auth/userAuthenticator");
 
 const indexRoutes = express.Router();
 
 indexRoutes.post("/signup", signupValidator, signupService);
 
-indexRoutes.post("/login", loginService);
+indexRoutes.post("/login", userAuthenticator, loginService);
 
 module.exports = indexRoutes;
