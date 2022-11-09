@@ -6,6 +6,7 @@ const { mongoose } = require("mongoose");
 const morgan = require("morgan");
 const indexRoutes = require("./routes/indexRoutes");
 const userRoutes = require("./routes/userRoutes");
+const addressRoutes = require("./routes/addressRoutes");
 
 //Create Express Create
 const app = express();
@@ -41,6 +42,7 @@ app.use(express.json());
 
 app.use("/", indexRoutes);
 app.use("/user", userRoutes);
+app.use("/address", addressRoutes);
 app.use("/example", exampleRoutes);
 
 // Listen To Port
