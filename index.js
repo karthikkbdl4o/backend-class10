@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const indexRoutes = require("./routes/indexRoutes");
 const userRoutes = require("./routes/userRoutes");
 const addressRoutes = require("./routes/addressRoutes");
+const productRoutes = require("./routes/productRoutes");
 
 //Create Express Create
 const app = express();
@@ -43,6 +44,10 @@ app.use(express.json());
 app.use("/", indexRoutes);
 app.use("/user", userRoutes);
 app.use("/address", addressRoutes);
+
+//Seller Routes
+app.use("/product", productRoutes);
+
 app.use("/example", exampleRoutes);
 
 // Listen To Port

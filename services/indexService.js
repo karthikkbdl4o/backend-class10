@@ -25,3 +25,23 @@ exports.signupService = async (req, res) => {
 exports.loginService = async (req, res) => {
   res.json(req.user);
 };
+exports.signUpSellerService = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  const hash = await bcrypt.hash(req.body.password, 10).then((result) => {
+    return result;
+  });
+
+  const user = new User({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    password: hash,
+    userType: "SELLER",
+  });
+
+  await user.save();
+  return res.json({ message: "Signed Up As Seller" });
+};
