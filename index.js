@@ -8,6 +8,7 @@ const indexRoutes = require("./routes/indexRoutes");
 const userRoutes = require("./routes/userRoutes");
 const addressRoutes = require("./routes/addressRoutes");
 const productRoutes = require("./routes/productRoutes");
+const jwtRoutes = require("./routes/jwtRoutes");
 
 //Create Express Create
 const app = express();
@@ -50,7 +51,9 @@ app.use("/product", productRoutes);
 
 app.use("/example", exampleRoutes);
 
+app.use("/jwt", jwtRoutes);
+
 // Listen To Port
-app.listen(3000, () => {
+app.listen(3001, () => {
   console.log("Express Server Started");
 });

@@ -25,6 +25,7 @@ exports.signupService = async (req, res) => {
 exports.loginService = async (req, res) => {
   res.json(req.user);
 };
+
 exports.signUpSellerService = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

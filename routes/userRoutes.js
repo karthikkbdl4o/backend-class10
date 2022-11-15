@@ -4,6 +4,7 @@ const {
   updateLoggedInUser,
 } = require("../services/userService");
 const userAuthenticator = require("../auth/userAuthenticator");
+const authenticatorV2 = require("../auth/authenticatorV2");
 
 const userRoutes = express.Router();
 
