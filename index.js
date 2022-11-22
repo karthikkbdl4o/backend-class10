@@ -9,6 +9,7 @@ const userRoutes = require("./routes/userRoutes");
 const addressRoutes = require("./routes/addressRoutes");
 const productRoutes = require("./routes/productRoutes");
 const jwtRoutes = require("./routes/jwtRoutes");
+const shopRoutes = require("./routes/shopRoutes");
 
 //Create Express Create
 const app = express();
@@ -48,6 +49,8 @@ app.use("/address", addressRoutes);
 
 //Seller Routes
 app.use("/product", productRoutes);
+
+app.use("/shop", shopRoutes);
 
 app.use("/example", exampleRoutes);
 

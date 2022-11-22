@@ -2,9 +2,10 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const authenticator = require("./authenticator");
 const { model } = require("mongoose");
+const authenticatorV2 = require("./authenticatorV2");
 
 const sellerAuthenticator = [
-  authenticator,
+  authenticatorV2,
   (req, res, next) => {
     if (req.user.userType == "SELLER") {
       next();

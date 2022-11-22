@@ -37,7 +37,10 @@ indexRoutes.post("/login/v2", async (req, res) => {
     //Create jwt token
     const token = jwt.sign({ userId: user._id }, "backend");
 
-    res.json({ message: "Login Successfull", token });
+    res.json({
+      message: "Login Successfull",
+      token,
+    });
   } else res.status(401).json({ error: "User Password Incorrect" });
 });
 

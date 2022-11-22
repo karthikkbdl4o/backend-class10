@@ -8,8 +8,8 @@ const authenticatorV2 = require("../auth/authenticatorV2");
 
 const userRoutes = express.Router();
 
-userRoutes.get("/", userAuthenticator, getLoggedInUser);
+userRoutes.get("/", authenticatorV2, getLoggedInUser);
 
-userRoutes.put("/", userAuthenticator, updateLoggedInUser);
+userRoutes.put("/", authenticatorV2, updateLoggedInUser);
 
 module.exports = userRoutes;
