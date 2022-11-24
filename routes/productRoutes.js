@@ -7,6 +7,8 @@ const {
   readProductService,
   updateProductService,
   deleteProductService,
+  sortReadAllProductsService,
+  paginatedReadAllProductsService,
 } = require("../services/productService");
 const { createProductValidator } = require("../validators/productValidator");
 const productRoutes = express.Router();
@@ -17,6 +19,14 @@ productRoutes.post(
   sellerAuthenticator,
   createProductValidator,
   createProductService
+);
+
+productRoutes.get("/sort", sellerAuthenticator, sortReadAllProductsService);
+
+productRoutes.get(
+  "/paginated",
+  sellerAuthenticator,
+  paginatedReadAllProductsService
 );
 
 //Read All

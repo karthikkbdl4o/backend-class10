@@ -18,6 +18,42 @@ exports.createProductService = async (req, res) => {
   res.json({ message: "Product Saved Successfully" });
 };
 
+exports.sortReadAllProductsService = async (req, res) => {
+  // Sort
+  const products = await Product.find({
+    seller: mongoose.Types.ObjectId(req.user._id),
+  }).sort({ price: "desc" });
+  res.json(products);
+};
+
+exports.paginatedReadAllProductsService = async (req, res) => {
+  const page = parseInt(req.query.page ? req.query.page : 1);
+  const size = parseInt(req.query.size ? req.query.size : 10);
+
+  console.log(page + " " + size);
+
+  // Sort
+  const products = await Product.find({
+    seller: mongoose.Types.ObjectId(req.user._id),
+  })
+    .limit(size)
+    .skip(size * (page - 1))
+    .sort({ name: "asc" });
+
+  const totalElements = await Product.count({
+    seller: mongoose.Types.ObjectId(req.user._id),
+  });
+
+  res.json({
+    products,
+    pagination: {
+      page,
+      size,
+      totalElements,
+    },
+  });
+};
+
 exports.readAllProductsService = async (req, res) => {
   const products = await Product.find({
     seller: mongoose.Types.ObjectId(req.user._id),
