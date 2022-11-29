@@ -115,10 +115,12 @@ exports.deleteProductService = async (req, res) => {
 };
 
 exports.searchProductService = async (req, res) => {
-  const page = parseInt(req.query.page ? req.query.page : 1);
+  console.log("1");
+  const page = parseInt(req.query.page ? req.query.page : 10);
   const size = parseInt(req.query.size ? req.query.size : 10);
   const query = req.query.q ? req.query.q : "";
   const sort = req.query.sort;
+  console.log(req.query);
 
   const condition = {
     $or: [
@@ -136,10 +138,11 @@ exports.searchProductService = async (req, res) => {
       },
     ],
   };
+  console.log(condition);
   let sortCondition = {};
 
-  console.log(sort);
   if (sort) {
+    console.log(sort);
     const sortSplit = sort.split(",");
     console.log(sortSplit);
 
