@@ -113,3 +113,58 @@ exports.deleteProductService = async (req, res) => {
 
   res.json({ message: "Deleted Successfully" });
 };
+
+exports.searchProductService = async (req, res) => {
+  const page = parseInt(req.query.page ? req.query.page : 1);
+  const size = parseInt(req.query.size ? req.query.size : 10);
+  const query = req.query.q ? req.query.q : "";
+  const sort = req.query.sort;
+
+  const condition = {
+    $or: [
+      {
+        name: {
+          $regex: query,
+          $options: "i",
+        },
+      },
+      {
+        description: {
+          $regex: query,
+          $options: "i",
+        },
+      },
+    ],
+  };
+  let sortCondition = {};
+
+  console.log(sort);
+  if (sort) {
+    const sortSplit = sort.split(",");
+    console.log(sortSplit);
+
+    if (sortSplit.length == 2) {
+      const key = sortSplit[0];
+      const value = sortSplit[1];
+      sortCondition[key] = value;
+    }
+  }
+
+  console.log(sortCondition);
+
+  const products = await Product.find(condition)
+    .limit(size)
+    .skip(size * (page - 1))
+    .sort(sortCondition);
+
+  const totalElements = await Product.count(condition);
+
+  res.json({
+    products,
+    pagination: {
+      page,
+      size,
+      totalElements,
+    },
+  });
+};
